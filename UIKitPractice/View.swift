@@ -31,23 +31,6 @@ class View: UIViewController {
         $0.alpha = 0.5
     }
     
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
     private let button = UIButton().then{
         $0.backgroundColor = .white
         $0.setTitle("버튼입니다.", for: .normal)
