@@ -5,14 +5,6 @@
 //  Created by saint on 2023/01/17.
 //
 
-
-
-
-
-
-
-
-
 import UIKit
 import SnapKit
 import Then
@@ -71,10 +63,6 @@ extension View{
             $0.width.equalTo(300)
             $0.height.equalTo(400)
         }
-//
-//        button.snp.makeConstraints{
-//            $0.edges.equalToSuperview().inset(50)
-//        }
         
         titleLabel.snp.makeConstraints{
             $0.center.equalToSuperview()
