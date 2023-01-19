@@ -75,7 +75,6 @@ class TextFieldView: UIViewController{
     }
     
     // MARK: - Function
-    
     func setupTextView() {
         infoTextView.delegate = self
         infoTextView.text = placeholder /// 초반 placeholder 생성
@@ -83,8 +82,10 @@ class TextFieldView: UIViewController{
     }
 }
 
-// MARK: - Layout
+
 extension TextFieldView{
+    
+    // MARK: - Layout
     private func setLayout(){
         view.addSubViews([questionLabel, titleletterNumLabel, titleTextField, editImage, titleUnderLine,
                           infoTextView, detailletterNumLabel])
