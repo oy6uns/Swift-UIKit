@@ -66,19 +66,40 @@ class TextFieldView: UIViewController{
     // MARK: - Life Cycles
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.isHidden = true
         self.view.backgroundColor = .white
-        titleTextField.delegate = self
-        titleTextField.returnKeyType = .done
         setLayout()
         setupTextView()
+        setupTextField()
+        setKeyboardLocation()
     }
     
     // MARK: - Function
-    func setupTextView() {
+    private func setupTextView() {
         infoTextView.delegate = self
+        infoTextView.returnKeyType = .done
         infoTextView.text = placeholder /// 초반 placeholder 생성
         infoTextView.textColor = .systemGray4 /// 초반 placeholder 색상 설정
+    }
+    
+    private func setupTextField() {
+        titleTextField.delegate = self
+        titleTextField.returnKeyType = .done
+    }
+    
+    private func setKeyboardLocation() {
+        /// 등록
+        NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillShown(_:)),name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector:#selector(keyboardWillBeHidden(_:)),name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+    
+    /// 키보드가 보일때 화면을 위로 100 만큼 올린다.
+    @objc func keyboardWillShown(_ notificiation: NSNotification) {
+      self.view.frame = CGRect(x: 0, y: -100, width: self.view.frame.size.width, height: self.view.frame.size.height)
+    }
+     
+    /// 키보드가 사라질때 화면을 다시 원복한다.
+    @objc func keyboardWillBeHidden(_ notification: NSNotification) {
+      self.view.frame = CGRect(x: 0, y: 0, width: self.view.frame.size.width, height: self.view.frame.size.height)
     }
 }
 
@@ -183,6 +204,7 @@ extension TextFieldView: UITextFieldDelegate {
 
 // MARK: - UITextViewDelegate
 extension TextFieldView: UITextViewDelegate {
+
     func textViewDidBeginEditing(_ textView: UITextView) {
         /// 플레이스홀더
         if textView.text == placeholder {
@@ -208,7 +230,7 @@ extension TextFieldView: UITextViewDelegate {
     
     func textViewDidEndEditing(_ textView: UITextView) {
         /// 플레이스홀더
-        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty || textView.text == placeholder {
+        if textView.text.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
             infoTextView.textColor = .systemGray4
             infoTextView.text = placeholder
             detailletterNumLabel.textColor = .systemGray4 /// 텍스트 개수가 0일 경우에는 글자 수 표시 색상이 모두 gray 색이게 설정
